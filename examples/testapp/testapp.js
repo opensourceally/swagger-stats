@@ -26,17 +26,17 @@ app.set('port', process.env.PORT || 3040);
 // Suppress cache on the GET API responses
 app.disable('etag');
 
-app.get('/', function(req,res) {
+app.get('/', function (req, res) {
     res.redirect('/swagger-stats/');
 });
 
-app.get('/apidoc.json', function(req,res){
+app.get('/apidoc.json', function (req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.send(swaggerSpec);
 });
 
 var tlBucket = 60000;
-if( process.env.SWS_TEST_TIMEBUCKET ){
+if (process.env.SWS_TEST_TIMEBUCKET) {
     tlBucket = parseInt(process.env.SWS_TEST_TIMEBUCKET);
 }
 
@@ -45,7 +45,7 @@ const swaggerSpec = require('./petstore.json');
 // Testing validation of 3rd-party API spec
 const parser = new swaggerParser();
 
-parser.validate(swaggerSpec,function(err, api) {
+parser.validate(swaggerSpec, function (err, api) {
     if (!err) {
         debug('Success validating swagger file!');
         //swaggerSpec = api;
@@ -56,12 +56,12 @@ parser.validate(swaggerSpec,function(err, api) {
             version: '0.99.7',
             timelineBucketDuration: tlBucket,
             uriPath: '/swagger-stats',
-            swaggerSpec:swaggerSpec,
+            swaggerSpec: swaggerSpec,
             elasticsearch: 'http://127.0.0.1:9200',
         }));
 
         // Implement custom API in application to return collected statistics
-        app.get('/stats', function(req,res){
+        app.get('/stats', function (req, res) {
             res.setHeader('Content-Type', 'application/json');
             res.send(swStats.getCoreStats());
         });
@@ -72,7 +72,7 @@ parser.validate(swaggerSpec,function(err, api) {
         // Setup server
         server = http.createServer(app);
         server.listen(app.get('port'));
-        debug('Server started on port ' + app.get('port') + ' http://localhost:'+app.get('port'));
+        debug('Server started on port ' + app.get('port') + ' http://localhost:' + app.get('port'));
 
     }
 });

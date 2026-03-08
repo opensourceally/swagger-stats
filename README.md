@@ -266,6 +266,22 @@ nodejs_eventloop_lag_seconds 0.000193641 1597303877464
 ```
 
 
+## Running with Docker
+
+You can easily run the included test application using Docker.
+
+1. Build the Docker image:
+```bash
+docker build -t swagger-stats-testapp .
+```
+
+2. Run the Docker container, mapping the container's port 3040 to your host port 3040:
+```bash
+docker run -p 3040:3040 swagger-stats-testapp
+```
+
+Then navigate to `http://localhost:3040/swagger-stats/` in your browser.
+
 ## Updates 
 
 See [Changelog](https://github.com/slanatech/swagger-stats/blob/master/CHANGELOG.md)
